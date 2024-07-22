@@ -7,7 +7,7 @@ export const getOrdersController = async (req, res) => {
       .populate("buyer", "name");
 
     if (!orders || orders.length === 0) {
-      return res.status.send({
+      return res.send({
         success: false,
         message: "No Orders Found",
       });
@@ -30,7 +30,7 @@ export const getAllOrdersController = async (req, res) => {
       .sort({ createdAt: -1 });
 
     if (!orders || orders.length === 0) {
-      return res.status.send({
+      return res.send({
         success: false,
         message: "No Orders Found",
       });
