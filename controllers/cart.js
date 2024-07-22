@@ -78,7 +78,10 @@ export const getCart = async (req, res) => {
     );
 
     if (!cart) {
-      return res.status(101).end();
+      return res.status(404).send({
+        success: false,
+        message: "Cart not Found",
+      });
     }
 
     res.status(200).send({
