@@ -261,24 +261,17 @@ export const decreaseProductQty = async (req, res) => {
   try {
     const { userId, productId } = req.body;
 
-    // Find the active cart for the user and populate the product details
     let cart = await Cart.findOne({ userId, status: "active" }).populate(
       "items.productId"
     );
 
-    // If cart doesn't exist, return 404
     if (!cart) {
-      return res.status(404).send({
-        success: false,
-        message: "Cart not found",
-      });
+      return res.status(100).end();
     }
 
-    // Find the product in the cart's items
     let productFound = false;
     for (let item of cart.items) {
       if (item.productId._id.toString() === productId) {
-        // Check if quantity is already 0
         if (item.quantity <= 1) {
           return res.status(400).send({
             success: false,
