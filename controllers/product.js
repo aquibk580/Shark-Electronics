@@ -127,24 +127,33 @@ export const productPhotoController = async (req, res) => {
   try {
     const product = await productModel.findById(req.params.pid).select("photo");
 
-    if (product && product.photo) {
-      const response = await axios.get(product.photo, { responseType: 'arraybuffer' });
-
-      const contentType = response.headers['content-type'];
-
-      res.set('Content-Type', contentType);
-      res.status(200).send(response.data);
-    } else {
+    if (!product || !product.photo) {
       return res.status(404).send({
         success: false,
         message: "Photo not found",
       });
     }
+
+    try {
+      const response = await axios.get(product.photo, { responseType: 'arraybuffer' });
+      const contentType = response.headers['content-type'];
+
+      res.set('Content-Type', contentType);
+      res.status(200).send(response.data);
+    } catch (axiosError) {
+      console.error("Error fetching photo from Cloudinary:", axiosError.message);
+      res.status(500).send({
+        success: false,
+        message: "Error fetching photo from Cloudinary",
+        error: axiosError.message,
+      });
+    }
   } catch (error) {
+    console.error("Error fetching product from database:", error.message);
     res.status(500).send({
       success: false,
-      message: "Error while getting photo",
-      error,
+      message: "Error fetching product from database",
+      error: error.message,
     });
   }
 };
