@@ -12,7 +12,7 @@ export const getOrdersController = async (req, res) => {
         message: "No Orders Found",
       });
     }
-    return res.json(orders);
+    return res.status(200).send(orders);
   } catch (error) {
     return res.status(500).send({
       success: false,
@@ -54,7 +54,7 @@ export const orderStatusController = async (req, res) => {
       { status },
       { new: true }
     );
-    res.json(orders)
+    res.json(orders);
   } catch (error) {
     res.status(500).send({
       succes: false,
