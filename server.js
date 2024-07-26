@@ -24,16 +24,16 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(express.static(path.join(__dirname, "./frontend/build")));
+// app.use(express.static(path.join(__dirname, "./frontend/build")));
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product", productRoutes);
 app.use("/api/v1/cart", cartRoutes);
 app.use("/api/v1/order", orderRoute);
 
-app.use("*", function (req, res) {
-  res.sendFile("./frontend/build/index.html");
-});
+// app.use("*", function (req, res) {
+//   res.sendFile("./frontend/build/index.html");
+// });
 
 app.listen(PORT, () => {
   console.log(`Server started at port ${PORT}`.bgCyan.white);
