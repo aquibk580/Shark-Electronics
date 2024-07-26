@@ -11,8 +11,16 @@
   ],
   "routes": [
     {
+      "src": "/api/(.*)",
+      "dest": "/src/index.js"
+    },
+    {
       "src": "/static/(.*)",
       "dest": "/public/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/index.html"
     }
   ]
 }
