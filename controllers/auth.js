@@ -63,9 +63,7 @@ export async function loginController(req, res) {
         message: "Invalid Password",
       });
     }
-    const token = JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
+    const token = JWT.sign({ _id: user._id }, process.env.JWT_SECRET);
     return res.status(200).json({
       success: true,
       message: "Login Successfully",
